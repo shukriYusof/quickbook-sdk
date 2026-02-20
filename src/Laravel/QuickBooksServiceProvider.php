@@ -71,10 +71,6 @@ class QuickBooksServiceProvider extends ServiceProvider
 
     protected function publishMigrations(): void
     {
-        if ($this->migrationExists('create_quickbooks_companies_table') || $this->migrationExists('create_quickbooks_tokens_table')) {
-            return;
-        }
-
         $this->publishes([
             __DIR__ . '/../../stubs/migrations/create_quickbooks_companies_table.php.stub' => $this->migrationPath('create_quickbooks_companies_table.php'),
             __DIR__ . '/../../stubs/migrations/create_quickbooks_tokens_table.php.stub' => $this->migrationPath('create_quickbooks_tokens_table.php'),
@@ -94,10 +90,5 @@ class QuickBooksServiceProvider extends ServiceProvider
     protected function migrationPath(string $filename): string
     {
         return database_path('migrations/' . date('Y_m_d_His') . '_' . $filename);
-    }
-
-    protected function migrationExists(string $migration): bool
-    {
-        return count(glob(database_path('migrations/*_' . $migration . '.php'))) > 0;
     }
 }
