@@ -16,7 +16,7 @@ A Laravel-first Composer SDK for QuickBooks Online (QBO). Supports single-compan
 ## Installation
 
 ```bash
-composer require boneybone/qb-sdk
+composer require shukyusof/qb-sdk
 ```
 
 Laravel auto-discovers the service provider. To publish the config and migrations:

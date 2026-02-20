@@ -5,3 +5,5 @@
 .DS_Store
 .env
 *.log
+/docs/
+AGENT.md
