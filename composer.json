@@ -1,0 +1,59 @@
+{
+  "name": "boneybone/qb-sdk",
+  "description": "Laravel SDK for QuickBooks Online (QBO) — OAuth2, multi-company, multi-tenant",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["quickbooks", "qbo", "laravel", "oauth2", "accounting", "intuit"],
+  "authors": [
+    {
+      "name": "boneybone",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "guzzlehttp/guzzle": "^7.0",
+    "illuminate/support": "^10.0|^11.0|^12.0",
+    "illuminate/database": "^10.0|^11.0|^12.0",
+    "illuminate/cache": "^10.0|^11.0|^12.0",
+    "nesbot/carbon": "^2.0|^3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0|^11.0",
+    "orchestra/testbench": "^8.0|^9.0|^10.0",
+    "mockery/mockery": "^1.6",
+    "phpstan/phpstan": "^2.0",
+    "larastan/larastan": "^2.0|^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "QuickBooks\\SDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "QuickBooks\\SDK\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit --colors=always",
+    "test:coverage": "phpunit --colors=always --coverage-text",
+    "analyse": "phpstan analyse --memory-limit=256M",
+    "check": [
+      "@analyse",
+      "@test"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "QuickBooks\\SDK\\Laravel\\QuickBooksServiceProvider"
+      ],
+      "aliases": {
+        "QuickBooks": "QuickBooks\\SDK\\Laravel\\Facades\\QuickBooks"
+      }
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

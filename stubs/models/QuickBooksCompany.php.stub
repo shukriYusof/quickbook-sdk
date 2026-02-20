@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Models;
+
+use QuickBooks\SDK\Models\QuickBooksCompany as BaseQuickBooksCompany;
+
+class QuickBooksCompany extends BaseQuickBooksCompany
+{
+}

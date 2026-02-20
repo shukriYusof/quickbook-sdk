@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use QuickBooks\SDK\Tenant\TenantContext;
+
+class SetQuickBooksTenantContext
+{
+    public function __construct(private TenantContext $tenantContext)
+    {
+    }
+
+    public function handle(Request $request, Closure $next)
+    {
+        $tenantId = null;
+
+        if (function_exists('tenant')) {
+            $tenant = tenant();
+            if ($tenant) {
+                $tenantId = (string) $tenant->getKey();
+            }
+        }
+
+        if ($tenantId === null && $request->route('tenant_id')) {
+            $tenantId = (string) $request->route('tenant_id');
+        }
+
+        if ($tenantId === null && $request->headers->has('X-Tenant-Id')) {
+            $tenantId = (string) $request->headers->get('X-Tenant-Id');
+        }
+
+        $this->tenantContext->setTenantId($tenantId);
+
+        return $next($request);
+    }
+}

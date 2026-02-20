@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Models;
+
+use QuickBooks\SDK\Models\QuickBooksToken as BaseQuickBooksToken;
+
+class QuickBooksToken extends BaseQuickBooksToken
+{
+}

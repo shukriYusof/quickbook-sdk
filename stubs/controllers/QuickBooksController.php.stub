@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use QuickBooks\SDK\Laravel\Facades\QuickBooks;
+
+class QuickBooksController extends Controller
+{
+    public function redirect(string $qbCompanyId)
+    {
+        $url = QuickBooks::getAuthorizationUrl($qbCompanyId);
+        return redirect()->away($url);
+    }
+
+    public function callback(Request $request)
+    {
+        $client = QuickBooks::handleCallback(
+            $request->get('code'),
+            $request->get('realmId'),
+            $request->get('state')
+        );
+
+        return response()->json([
+            'connected' => true,
+            'company_id' => $client->getCompanyId(),
+        ]);
+    }
+
+    public function disconnect(string $qbCompanyId)
+    {
+        QuickBooks::disconnectCompany($qbCompanyId);
+
+        return response()->noContent();
+    }
+}
