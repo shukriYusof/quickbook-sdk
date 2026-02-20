@@ -1,12 +1,19 @@
 {
-  "name": "boneybone/qb-sdk",
+  "name": "shukyusof/qb-sdk",
   "description": "Laravel SDK for QuickBooks Online (QBO) — OAuth2, multi-company, multi-tenant",
   "type": "library",
   "license": "MIT",
-  "keywords": ["quickbooks", "qbo", "laravel", "oauth2", "accounting", "intuit"],
+  "keywords": [
+    "quickbooks",
+    "qbo",
+    "laravel",
+    "oauth2",
+    "accounting",
+    "intuit"
+  ],
   "authors": [
     {
-      "name": "boneybone",
+      "name": "shukyusof",
       "role": "Developer"
     }
   ],
