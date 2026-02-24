@@ -22,11 +22,9 @@ class OAuth2Handler
 {
     private ?Client $httpClient = null;
 
-    public function __construct(private LoggerInterface $logger = new NullLogger())
-    {
-    }
+    public function __construct(private LoggerInterface $logger = new NullLogger()) {}
 
-    public function getAuthorizationUrl(string $qbCompanyId, ?array $scopes = null, ?string $state = null): string
+    public function getAuthorizationUrl(string $qbCompanyId, ?array $scopes = null, ?string $state = null, array $extraParams = []): string
     {
         $state = $state ?: $this->encodeState([
             'qb_company_id' => $qbCompanyId,
@@ -37,13 +35,13 @@ class OAuth2Handler
         $scopes       = $scopes ?: config('quickbooks.oauth.scopes', []);
         $authorizeUrl = config('quickbooks.oauth.authorize_url');
 
-        $query = http_build_query([
+        $query = http_build_query(array_merge([
             'client_id'     => config('quickbooks.client_id'),
             'response_type' => 'code',
             'scope'         => implode(' ', $scopes),
             'redirect_uri'  => config('quickbooks.redirect_uri'),
             'state'         => $state,
-        ]);
+        ], $extraParams));
 
         return rtrim($authorizeUrl, '?') . '?' . $query;
     }

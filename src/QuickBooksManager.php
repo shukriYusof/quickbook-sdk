@@ -32,8 +32,7 @@ class QuickBooksManager
         private OAuth2Handler $oauth,
         private TenantContext $tenantContext,
         private LoggerInterface $logger = new NullLogger()
-    ) {
-    }
+    ) {}
 
     public function company(string $qbCompanyId): QuickBooksClient
     {
@@ -78,11 +77,11 @@ class QuickBooksManager
         return $this->company($defaultCompany);
     }
 
-    public function getAuthorizationUrl(string $qbCompanyId, ?array $scopes = null): string
+    public function getAuthorizationUrl(string $qbCompanyId, ?array $scopes = null, array $extraParams = []): string
     {
         $this->ensureCompanyExists($qbCompanyId);
 
-        return $this->oauth->getAuthorizationUrl($qbCompanyId, $scopes);
+        return $this->oauth->getAuthorizationUrl($qbCompanyId, $scopes, null, $extraParams);
     }
 
     public function handleCallback(string $code, string $realmId, string $state): QuickBooksClient
@@ -217,7 +216,7 @@ class QuickBooksManager
             $record = (new $companyClass())
                 ->newQuery()
                 ->where('qb_company_id', $qbCompanyId)
-                ->when($tenantId !== null, fn ($q) => $q->where('tenant_id', $tenantId))
+                ->when($tenantId !== null, fn($q) => $q->where('tenant_id', $tenantId))
                 ->first();
         }
 
